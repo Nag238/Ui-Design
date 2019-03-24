@@ -1,0 +1,64 @@
+import { Component } from '@angular/core';
+import { FormGroup,FormBuilder, Validators, FormArray } from '@angular/forms';
+import{HttpService} from '../ServicesFolder/HttpService';
+
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  providers:[HttpService]
+})
+export class AppComponent {
+  registerForm: FormGroup;
+  selectedItemArray = [];
+  Hobbies = ["Cricket", "football", "VooleyBall"];
+  genderform = ["Male", "Female"];
+  getselectedGender = "";
+
+
+  constructor(private _fb: FormBuilder,private _http:HttpService) {
+
+  }
+
+
+  ngOnInit() {
+
+    this.registerForm = this._fb.group({
+      firstName: ['',Validators.required],
+      lastName: ['',Validators.required],
+      gender: [],
+      Hobbies: this.GetHobbiesControl()
+    });
+  }
+
+  GetHobbiesControl() {
+    const arr = this.Hobbies.map(e => {
+      return this._fb.control(false);
+    });
+    return this._fb.array(arr);
+  }
+
+  get HobbiesArray() {
+    return <FormArray>this.registerForm.get('Hobbies');
+  }
+
+  onSubmit() {
+    let data=this.registerForm.value;
+    alert(JSON.stringify(data));
+     
+  }
+
+  GetSelectedItems() {
+    this.selectedItemArray=[];
+    this.HobbiesArray.controls.forEach((c,i)=>{
+      if(c.value)
+      {
+      this.selectedItemArray.push(this.Hobbies[i]);
+      }
+    return this.selectedItemArray;
+    });
+
+  }
+
+}
