@@ -1,0 +1,24 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import{HttpClientModule} from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import{HeaderComponent} from '../Header/Header.component';
+import{FooterComponent} from '../Footer/Footer.component';
+import{ReactiveFormsModule,FormsModule} from '@angular/forms';
+import{ServiceCallout} from '../AppServicesFolder/AppHttpservice';
+
+@NgModule({
+  declarations: [
+    AppComponent,HeaderComponent,FooterComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,HttpClientModule,
+    FormsModule
+  ],
+  providers: [ServiceCallout],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
