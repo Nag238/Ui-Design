@@ -1,0 +1,21 @@
+ jasmine.getEnv().addReporter({
+      specDone: function (result) {
+        if (result.status === 'failed') {
+          browser.getProcessedConfig().then(function (config) {
+            browser.takeScreenshot().then(function (png) {
+              var dirPath = './reports/screenshots/';
+              if (!fs.existsSync('./reports')) {
+                fs.mkdirSync('./reports');
+                if (!fs.existsSync(dirPath))
+                  fs.mkdirSync(dirPath);
+              }
+              var fileName = (config.capabilities.browserName + '-' + result.fullName).replace(/[\/\\]/g, ' ').substring(0, 40);
+              var stream = fs.createWriteStream(dirPath + fileName + '.png');
+              //var stream = fs.createWriteStream('foo.png');
+              stream.write(new Buffer(png, 'base64'));
+              stream.end();
+            });
+          });
+        }
+      }
+    });
