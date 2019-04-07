@@ -1,0 +1,63 @@
+import { AppPage } from './app.po';
+import { browser, logging, protractor, by, element, Browser,$$,$ } from 'protractor';
+import { debug } from 'util';
+var fs = require('fs');
+
+
+
+
+fdescribe('EAP App', () => {
+  let page: AppPage;
+
+  beforeEach(() => {
+    page = new AppPage();
+  });
+
+
+  it('check Userdetail Activites', async () => {
+    let queryvalue: string;
+    repl:debug;
+    let count: number;
+    let res=[];
+    let flag:boolean=false;
+    page.navigateTo();
+    debug> this.repl
+    page.getfirstName().sendKeys("nagendra");
+    page.getLastName().sendKeys("king");
+    page.selectRdio().get(0).click();
+    page.getcheckboc().get(0).click();
+    page.getButton().click();
+    this.queryvalue=await page.getResultlabel().getText().then(function (text) {
+      return 1000;
+    });
+    page.getResultlabel().click();
+    browser.waitForAngular();
+    browser.sleep(5000);
+    console.log('query value'+this.queryvalue);
+    let rowCount= await page.getGriddata().getText().then(function(rows){
+        return rows.length;
+    });
+    console.log('row count '+rowCount);
+    for(var i=0;i<rowCount;i++)
+    {
+        let td=await page.getGriddata().get(i).all(by.css('td')).get(0).getText();
+        if(td==this.queryvalue)
+        {
+          this.flag=true;
+        }
+    }
+    expect(this.flag).toBeTruthy();
+  });
+
+  it('Userdetail Activites', async () => {
+    expect('hi').toEqual('hi');
+  });
+
+  afterEach(async () => {
+    // Assert that there are no errors emitted from the browser
+    const logs = await browser.manage().logs().get(logging.Type.BROWSER);
+    expect(logs).not.toContain(jasmine.objectContaining({
+      level: logging.Level.SEVERE,
+    } as logging.Entry));
+  });
+});
