@@ -1,0 +1,18 @@
+import { UploadModule } from '@progress/kendo-angular-upload';
+ <kendo-upload [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl">
+                  </kendo-upload>
+
+
+getuploadbtn(){
+    // return element.all(by.className('k-button k-upload-button'));
+    return element.all(by.css('input[type="file"]'));
+  }
+
+
+var path=require('path');
+let dir='C:/';
+    let fileup='../test.txt';
+    let realpath=path.resolve('C:/test.txt');
+
+page.getuploadbtn().sendKeys(realpath);
+    browser.sleep(5000);
