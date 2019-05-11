@@ -1,0 +1,19 @@
+
+import { Workbook, Row, Cell, Worksheet } from 'exceljs';
+
+it('Excel File Operations', async () => {
+    // set implicit time to 30 seconds
+    browser.manage().timeouts().implicitlyWait(30000);
+    // create object for workbook
+    var wb: Workbook = new Workbook();
+    // read xlsx file type
+    await wb.xlsx.readFile("E:/test1.xlsx").then(function () {
+      //sheet object
+      let sheet: Worksheet = wb.getWorksheet("Sheet1");
+      //row objct
+      for (var i = 1; i <=3; i++) {
+        let rowObject: Row = sheet.getRow(i);
+          console.log(rowObject.getCell(1).value +'+'+rowObject.getCell(2).value + '+' +rowObject.getCell(3).value);
+      }
+    });
+  });
