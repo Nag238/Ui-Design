@@ -1,0 +1,22 @@
+
+                ConnectionOptions op = new ConnectionOptions();
+                ManagementPath ph = new ManagementPath("\\\\.\\root\\cimv2");
+                ManagementScope cope = new ManagementScope(ph, op);
+                cope.Connect();
+                if(cope.IsConnected)
+                {
+
+                    //ObjectQuery qury = new ObjectQuery("SELECT * FROM win32_Service");
+                    ManagementObjectSearcher se = new ManagementObjectSearcher(cope, new ObjectQuery("SELECT * FROM Win32_Service"));
+                    foreach (ManagementBaseObject obj in se.Get())
+                    {
+                        Console.WriteLine(obj["Caption"].ToString());
+                        if (obj["running"].Equals(true))
+                        {
+                            Console.WriteLine("running");
+                        }
+                    }
+                    Console.Read();
+                }
+
+https://www.c-sharpcorner.com/UploadFile/Vipul.Kelkar/windows-management-instrumentation-wmi/
